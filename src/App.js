@@ -18,7 +18,7 @@ class App extends React.Component {
               <UserContainer />
             </div>
             <div className="chatSpace">
-              <ChatContainer/>
+              <ChatContainer userId="2" />
             </div>
           </div>
       </div>

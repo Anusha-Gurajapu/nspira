@@ -7,12 +7,14 @@
   height: 5%;
   padding: 1rem 2rem;
   color: #fff;
-  font-size: 24px;
+  font-size: 20px;
   background-image: linear-gradient(to bottom right, midnightblue, blue, midnightblue);
 }
 
 .body {
-  height: 75%;
+  height: 73%;
+  overflow-y: auto;
+  margin-bottom: 2%;
 }
 
 .footer {
@@ -34,9 +36,10 @@
 .message {
   border: none;
   width: 90%;
-  height: 90%;
+  height: 80%;
   margin: 0;
   padding-left: 2rem;
+  resize: none;
 }
 
 .sendRow {
@@ -50,7 +53,30 @@
   border: 1px solid midnightblue;
   border-radius: 2rem;
   padding: 12px 16px;
+  font-size: 12px;
+  font-weight: bold;
   text-transform: uppercase;
   margin-right: 3rem;
   cursor: pointer;
+  display: flex;
+}
+
+.send img {
+  width: 12px;
+  height: 12px;
+  margin-left: 12px;
+}
+
+.messageContainer {
+  margin: 16px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.chatMessage {
+  max-width: 45%;
+  padding: 8px 12px;
+  margin: 0px 16px;
+  background-image: linear-gradient(to right, cyan, #66CDAA);
+  border-radius: 16px;
 }

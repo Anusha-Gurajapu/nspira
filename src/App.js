@@ -1,10 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
 import UserContainer from './components/user-container';
 import ChatContainer from './components/chat-container';
 import {getUsers, addUser, sendMessage} from './actions/chat';
 import { connect } from 'react-redux';
-import store from './store/configureStore';
 import './App.css';
 
 class App extends React.Component {
@@ -30,8 +28,9 @@ class App extends React.Component {
     const {users}=this.state;
     this.setState({adding: true});
     const data = await addUser(params);
+    if(data.status){
     params.messages = [];
-    users.push(params);
+    users.push(params);}
     this.setState({users, adding: false});
   }
 
@@ -39,7 +38,8 @@ class App extends React.Component {
     const {users,activeIndex} = this.state;
     this.setState({sending: true});
     const data = await sendMessage(params);
-    users[activeIndex].messages.push({message:params.message,id:params.id});
+    if(data.status){
+    users[activeIndex].messages.push({message:params.message,id:params.id});}
     this.setState({users, sending: false});
   }
 

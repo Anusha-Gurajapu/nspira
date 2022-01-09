@@ -8,7 +8,6 @@ class UserContainer extends React.Component {
     this.state = {
       isAdd: false,
       userName: "",
-      users: this.props.users||[],
     };
   }
 
@@ -17,7 +16,7 @@ class UserContainer extends React.Component {
   }
 
   handleChangeUserName = ({ text, isAdd }) => {
-    const { users, userName } = this.state;
+    const { userName } = this.state;
     if (isAdd) {
       this.props.handleAddUser({name: userName, id: new Date().getTime()});
       this.setState({ userName:"", isAdd: false });
@@ -39,7 +38,7 @@ class UserContainer extends React.Component {
             />
           </div>}
         <div className="userContainer">
-          { (this.state.users || []).map((x, ind) =>{
+          { (this.props.users || []).map((x, ind) =>{
             const isActive = this.props.activeIndex===ind;
             return (
               <div

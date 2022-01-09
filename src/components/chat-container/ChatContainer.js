@@ -5,16 +5,19 @@ class ChatContainer extends React.Component {
   constructor(props){
     super(props);
     this.state={
-      messages:[
-        {text: "Hi", userId: "1"},
-        {text: "Hello", userId: "1"},
-      ],
+      message: "",
     };
     this.messagesEnd = React.createRef();
   }
 
   componentDidMount(){
     this.scrollToBottom();
+  }
+
+  componentDidUpdate(prevProps){
+    if(prevProps.data?.messages?.length!==this.props.data?.messages?.length||prevProps.sending===true){
+      this.scrollToBottom();
+    }
   }
 
   scrollToBottom = () => {
@@ -25,10 +28,11 @@ class ChatContainer extends React.Component {
   }
 
   handleSend=()=>{
-    const {message,messages}= this.state;
+    const {data}= this.props;
+    const {message}= this.state;
     if(!!(message||"").trim()?.length){
-      messages.push({text:message, userId:"2"});
-      this.setState({messages,message:""},()=>{this.scrollToBottom()});
+      this.props.handleSendMessage({message, id: 0, userId: data.id});
+      this.setState({message:""});
     }
   }
 
@@ -45,16 +49,17 @@ class ChatContainer extends React.Component {
   };
 
   render(){
-    const {messages, message}= this.state;
-    const canSend = !!(message||"").trim().length;
+    const {message}= this.state;
+    const {sending, data} = this.props;
+    const canSend = !!(message||"").trim().length&&!sending;
     return (
       <div className="chat">
         <div className="chatHeader">
           Chat Messages
         </div>
         <div className="body" ref={this.messagesEnd}>
-          {(messages||[]).map((x,ind)=>{
-            const isMe = this.props.userId === x.userId;
+          {(data?.messages||[]).map((x,ind)=>{
+            const isMe = x.id === 0;
             return(
               <div
                className={`messageContainer`}
@@ -64,8 +69,8 @@ class ChatContainer extends React.Component {
                }}
                key={`chatContainer${x.userId}${ind+1}`}
               >
-                 <img src="/images/user-outline.svg" alt={x.userId} />
-                 <span className={"chatMessage"}>{x.text}</span>
+                 <img src="/images/user-outline.svg" alt={x.name} />
+                 <span className={"chatMessage"}>{x.message}</span>
               </div>
             )
           })}
@@ -74,7 +79,7 @@ class ChatContainer extends React.Component {
           <div className="newMessage">New Message </div>
           <div className="sendRow">
             <input
-              placeholder={'Type a message'}
+              placeholder={`${sending ? "Sending Message, please wait..." :"Type a message"}`}
               value={message}
               className={"message"}
               onChange={this.handleTextInput}
@@ -88,7 +93,7 @@ class ChatContainer extends React.Component {
              }}
              onClick={()=>{if(canSend){this.handleSend()}}}
             >
-              Send <img src="/images/send.svg" alt=""/>
+              Send{sending?"ing":""} <img src="/images/send.svg" alt=""/>
             </div>
           </div>
         </div>

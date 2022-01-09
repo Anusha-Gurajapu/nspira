@@ -6,10 +6,9 @@ class UserContainer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      activeUser: null,
       isAdd: false,
       userName: "",
-      users: ["1","2","3","4","5","6","7","8","9","10","11","12"],
+      users: this.props.users||[],
     };
   }
 
@@ -20,8 +19,8 @@ class UserContainer extends React.Component {
   handleChangeUserName = ({ text, isAdd }) => {
     const { users, userName } = this.state;
     if (isAdd) {
-      users.push(userName);
-      this.setState({ users, userName:"", isAdd: false });
+      this.props.handleAddUser({name: userName, id: new Date().getTime()});
+      this.setState({ userName:"", isAdd: false });
     } else{
       this.setState({ userName: text })
     }
@@ -30,17 +29,18 @@ class UserContainer extends React.Component {
   render(){
     return (
       <div className={'user'}>
-        <div className={'header'}>
-          Users
-          <img
-            src="/images/add.svg"
-            alt="Add User"
-            onClick={()=>{this.toggleAdd(true)}}
-          />
-        </div>
+        {this.props.adding ?<div className={'header'}> Adding User...</div>:
+           <div className={'header'}>
+            Users
+            <img
+              src="/images/add.svg"
+              alt="Add User"
+              onClick={()=>{this.toggleAdd(true)}}
+            />
+          </div>}
         <div className="userContainer">
           { (this.state.users || []).map((x, ind) =>{
-            const isActive = this.state.activeUser===ind;
+            const isActive = this.props.activeIndex===ind;
             return (
               <div
               className={`userRow`}
@@ -49,16 +49,16 @@ class UserContainer extends React.Component {
                     cursor: isActive ? "default" : "pointer",
                   }}
               role="presentation"
-              onClick={()=>{this.setState({activeUser:ind})}}
+              onClick={()=>{this.props.handleChangeUser(ind)}}
               >
               <img src="/images/user.jpg" alt="profile" />
-              <span>{x}</span>
+              <span>{x.name}</span>
               </div>
             )}
           )}
         </div>
         {this.state.isAdd ?
-          <AddUser 
+          <AddUser
             toggleAdd={this.toggleAdd}
             userName={this.state.userName}
             handleChangeUserName={this.handleChangeUserName}

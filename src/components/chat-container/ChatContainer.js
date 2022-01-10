@@ -100,7 +100,7 @@ class ChatContainer extends React.Component {
           <div className="sendRow">
             <input
               placeholder={`${
-                sending ? 'Sending Message, please wait...' : 'Type a message'
+                sending ? 'Sending Message, please wait...' : 'Type something...'
               }`}
               value={message}
               className={'message'}

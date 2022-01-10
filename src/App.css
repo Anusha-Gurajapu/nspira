@@ -27,3 +27,17 @@
 input:focus {
   outline: none;
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background: #e8e8e8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #a8a8a8;
+  border-radius: 8px;
+}

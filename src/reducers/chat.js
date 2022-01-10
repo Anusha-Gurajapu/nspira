@@ -1,9 +1,11 @@
 import produce from 'immer';
 
-export const DEFAULT_STORE = {};
+export const DEFAULT_STORE = {
+  users: [],
+};
 
 export const ACTION_TYPES = {
-  updateStore: 'updateConnectStore',
+  updateStore: 'updateChatStore',
 };
 
 export default function chat(state = DEFAULT_STORE, action) {

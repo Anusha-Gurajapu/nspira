@@ -23,6 +23,14 @@
   height: calc(100% - 4rem);
 }
 
+.userContainer span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
 .userRow {
   display: flex;
   flex-direction: row;

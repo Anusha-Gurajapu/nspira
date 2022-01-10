@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { updateStore } from './index';
-import chat, { ACTION_TYPES } from '../reducers/chat';
+import { ACTION_TYPES } from '../reducers/chat';
 
 /** @description updates the chat store
  * @params payload
